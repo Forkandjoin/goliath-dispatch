@@ -4616,3 +4616,29 @@ validación de Ajustes llevaban el nombre de la columna en inglés dentro de una
 frase en español —«El campo load number prefix no tiene un formato válido»— desde
 siempre. Nadie lo había visto porque el mensaje aparecía lejos de su campo.
 Rediseñar una pantalla es, entre otras cosas, volver a leerla.
+
+---
+
+## Lote 49 — tarjetas en vez de desplegable
+
+**Cambiar un control cambia la frecuencia de los gestos, y eso destapa
+defectos.** El resultado de una búsqueda sobrevivía al cambio de USDOT a MC
+desde que existe el paso 1: la ficha encontrada se quedaba debajo de la nueva
+elección leyéndose como su respuesta. Con un desplegable casi nadie cambiaba de
+tipo después de buscar. Con las dos opciones delante es un gesto normal. **El
+defecto no apareció con el rediseño: apareció a la vista.**
+
+**Un control que lo parece y no lo es.** La forma fácil de pintar dos tarjetas
+seleccionables son dos `div` con `onClick`: se ve igual y deja fuera a quien
+navega con teclado, a quien usa un lector de pantalla y a quien pulsa en el
+borde en vez de en el texto. Un radio nativo dentro de un `label` da las cuatro
+cosas sin escribir ninguna.
+
+**Esconder un control sin sacarlo del teclado.** `sr-only` sí, `hidden` no. Es
+la diferencia entre «no se ve» y «no existe», y con `hidden` el grupo entero
+deja de ser alcanzable — la accesibilidad que se estaba añadiendo se habría
+perdido en la línea siguiente.
+
+**Conservar lo que escribió la persona aunque se tire lo demás.** Al cambiar de
+tipo se tira el resultado y se guarda el número. Lo que estaba mal era lo que
+afirmaba la pantalla, no lo que tecleó quien la usa.

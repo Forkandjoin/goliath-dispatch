@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { RadioCards } from '@/components/Form/RadioCards'
 import { useI18n } from '@/lib/i18n'
 
 /** Lo que el registro federal devuelve de un transportista, ya proyectado. */
@@ -126,6 +127,29 @@ export function FmcsaLookup({
     }
   }
 
+  /**
+   * Cambiar de USDOT a MC —o al revés— tira el resultado anterior.
+   *
+   * Sin esto, buscar por USDOT, encontrar, y cambiar a MC dejaba la ficha
+   * encontrada en pantalla DEBAJO de la nueva elección, leyéndose como si fuera
+   * la respuesta a ella. Con el desplegable el defecto estaba igual de puesto y
+   * se veía menos; con las dos opciones delante, cambiar de tipo es un gesto
+   * normal y el resultado obsoleto se queda a la vista.
+   *
+   * El número escrito SÍ se conserva: alguien que se equivocó de tipo y teclea
+   * el mismo número no tiene por qué volver a teclearlo, y lo que estaba mal
+   * era la afirmación de la pantalla, no lo que él escribió.
+   */
+  const cambiarTipo = (nuevo: 'dot' | 'mc') => {
+    if (nuevo === kind) {
+      return
+    }
+
+    setKind(nuevo)
+    setEstado('idle')
+    setRespuesta(null)
+  }
+
   const noPuedeOperar = respuesta?.carrier?.allowedToOperate === false
 
   return (
@@ -133,19 +157,25 @@ export function FmcsaLookup({
       <h2 className="font-display text-lg font-bold text-navy-700">{texto('title')}</h2>
       <p className="mt-1 text-sm text-steel-700">{texto('intro')}</p>
 
-      <div className="mt-5 flex flex-wrap items-end gap-3">
-        <label className="flex flex-col gap-1">
-          <span className="text-sm font-medium text-steel-700">{texto('kind')}</span>
-          <select
-            value={kind}
-            onChange={(e) => { setKind(e.target.value as 'dot' | 'mc') }}
-            className="rounded border border-steel-300 bg-white px-3 py-2 text-sm font-semibold text-navy-800 outline-none transition focus:border-navy-500 focus:ring-2 focus:ring-navy-200"
-          >
-            <option value="dot">{texto('dot')}</option>
-            <option value="mc">{texto('mc')}</option>
-          </select>
-        </label>
+      {/* Las dos opciones A LA VISTA y no dentro de un desplegable.
 
+          USDOT y MC son dos números distintos que mucha gente confunde, y la
+          diferencia cabe en una línea. Un desplegable la esconde justo cuando
+          hace falta: al elegir. */}
+      <div className="mt-5">
+        <RadioCards
+          legend={texto('kind')}
+          value={kind}
+          name="fmcsa-kind"
+          onChange={(v) => { cambiarTipo(v) }}
+          options={[
+            { value: 'dot', label: texto('dot'), hint: texto('dotHint') },
+            { value: 'mc', label: texto('mc'), hint: texto('mcHint') },
+          ]}
+        />
+      </div>
+
+      <div className="mt-4 flex flex-wrap items-end gap-3">
         <label className="flex flex-1 flex-col gap-1" style={{ minWidth: '12rem' }}>
           <span className="text-sm font-medium text-steel-700">
             {kind === 'dot' ? texto('dotNumber') : texto('mcNumber')}

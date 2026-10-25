@@ -151,3 +151,53 @@ Esto es el piloto. El resto del panel —cargas, transportistas, conductores,
 finanzas— sigue con la piel anterior y se pasa por grupos en los lotes
 siguientes, ahora que los primitivos existen y la forma está aprobada sobre una
 pantalla de verdad.
+
+---
+
+## Elegir entre pocas opciones: tarjetas, no desplegable (lote 49)
+
+`resources/js/components/Form/RadioCards.tsx`
+
+Un desplegable esconde las opciones hasta que alguien lo abre, y con ello
+esconde la diferencia entre ellas. Cuando son dos o tres y cada una necesita una
+línea de explicación —USDOT y MC son dos números distintos que mucha gente
+confunde— enseñarlas enteras es más corto de leer que abrir una lista, leerla y
+cerrarla.
+
+Primer sitio donde se usa: el paso 1 del alta pública de transportista.
+
+### Radios de verdad, no `div`s que se pintan
+
+Cada tarjeta ES un `<input type="radio">` dentro de su `<label>`. De ahí salen
+gratis, y bien hechas, las cuatro cosas que un puñado de `div`s con `onClick`
+obliga a reimplementar mal:
+
+- las flechas del teclado recorren el grupo;
+- el lector de pantalla anuncia «opción 1 de 2, seleccionada»;
+- pulsar en cualquier sitio de la tarjeta la elige, porque el `label` entero es
+  el objetivo;
+- el formulario sabe qué hay elegido sin que nadie se lo cuente.
+
+El radio se esconde con `sr-only` y **no** con `hidden`: escondido del todo
+dejaría de recibir el foco y el grupo volvería a ser inalcanzable con el
+teclado, que es justo lo que se estaba evitando. Y como el radio no se ve, el
+anillo de foco lo pinta la tarjeta con `focus-within`.
+
+El `fieldset`/`legend` no es decoración: sin él, un lector de pantalla lee dos
+opciones sueltas y nunca dice a qué pregunta contestan.
+
+El `name` del grupo se genera con `useId()` si no se pasa. Dos grupos de radios
+con el mismo `name` son UN grupo: elegir en uno deselecciona el otro, y nadie
+entendería por qué.
+
+### Lo que encontró el cambio
+
+Buscar por USDOT, encontrar, y cambiar a MC dejaba **la ficha encontrada en
+pantalla debajo de la nueva elección**, leyéndose como su respuesta. El defecto
+estaba igual de puesto con el desplegable y se veía menos; con las dos opciones
+delante, cambiar de tipo es un gesto normal.
+
+Ahora cambiar de tipo devuelve el panel a reposo. El número escrito **se
+conserva**: lo que estaba mal era la afirmación de la pantalla, no lo que
+escribió la persona. Y volver a pulsar la tarjeta que ya estaba elegida no tira
+nada, que sería un castigo sin motivo por un clic repetido.

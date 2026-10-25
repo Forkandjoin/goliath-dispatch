@@ -473,9 +473,9 @@
         "lookup": {
             "title": "Start with your USDOT or MC number",
             "intro": "We look it up in the federal register and fill in what it publishes, so you only correct what is out of date.",
-            "kind": "Look up by",
-            "dot": "USDOT number",
-            "mc": "MC number",
+            "kind": "Which number will you use",
+            "dot": "USDOT",
+            "mc": "MC",
             "dotNumber": "USDOT number",
             "mcNumber": "MC number",
             "search": "Look it up",
@@ -493,7 +493,9 @@
             "rejected": "This page has been open a long time. Reload it and try again.",
             "skip": "Skip this and fill the form in by hand",
             "prefilled": "Some fields were filled in from the FMCSA register on {date}. Please check them — the register is not always current.",
-            "prefilledMock": "Some fields were filled in with a worked example on {date}, because this site has no FMCSA credentials yet. Check every one of them."
+            "prefilledMock": "Some fields were filled in with a worked example on {date}, because this site has no FMCSA credentials yet. Check every one of them.",
+            "dotHint": "Department of Transportation number.",
+            "mcHint": "Motor Carrier / docket number."
         },
         "factoring": {
             "which": "Which factoring company?",

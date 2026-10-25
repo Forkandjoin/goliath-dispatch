@@ -473,9 +473,9 @@
         "lookup": {
             "title": "Empiece por su número USDOT o MC",
             "intro": "Lo buscamos en el registro federal y rellenamos lo que publica, para que usted solo corrija lo que esté desactualizado.",
-            "kind": "Buscar por",
-            "dot": "Número USDOT",
-            "mc": "Número MC",
+            "kind": "¿Qué número va a usar?",
+            "dot": "USDOT",
+            "mc": "MC",
             "dotNumber": "Número USDOT",
             "mcNumber": "Número MC",
             "search": "Buscar",
@@ -493,7 +493,9 @@
             "rejected": "Esta página lleva mucho tiempo abierta. Recárguela e inténtelo otra vez.",
             "skip": "Omitir esto y rellenar el formulario a mano",
             "prefilled": "Algunos campos se rellenaron desde el registro de FMCSA el {date}. Revíselos — el registro no siempre está al día.",
-            "prefilledMock": "Algunos campos se rellenaron con un ejemplo de muestra el {date}, porque este sitio todavía no tiene credenciales de FMCSA. Revíselos todos."
+            "prefilledMock": "Algunos campos se rellenaron con un ejemplo de muestra el {date}, porque este sitio todavía no tiene credenciales de FMCSA. Revíselos todos.",
+            "dotHint": "Número del Departamento de Transporte.",
+            "mcHint": "Número de Motor Carrier, también llamado docket."
         },
         "factoring": {
             "which": "¿Con qué empresa de factoring?",
